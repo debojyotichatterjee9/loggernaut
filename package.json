@@ -1,14 +1,14 @@
 {
-  "name": "quicklog",
+  "name": "loggernaut",
   "version": "1.0.0",
-  "description": "quicklog is a lightweight and easy-to-use logging library designed for simple debugging and logging needs in your Node.js applications. It provides a straightforward API for quickly capturing and recording log messages, making it ideal for development, testing, and production environments.",
+  "description": "loggernaut is a lightweight and easy-to-use logging library designed for simple debugging and logging needs in your Node.js applications. It provides a straightforward API for quickly capturing and recording log messages, making it ideal for development, testing, and production environments.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/debojyotichatterjee9/quicklog.git"
+    "url": "git+https://github.com/debojyotichatterjee9/loggernaut.git"
   },
   "keywords": [
     "logger"
@@ -16,7 +16,7 @@
   "author": "Debojyoti Chatterjee",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/debojyotichatterjee9/quicklog/issues"
+    "url": "https://github.com/debojyotichatterjee9/loggernaut/issues"
   },
-  "homepage": "https://github.com/debojyotichatterjee9/quicklog#readme"
+  "homepage": "https://github.com/debojyotichatterjee9/loggernaut#readme"
 }
