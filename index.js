@@ -1,50 +1,67 @@
-// logger.js
+// console.clear()
+const pc = require("picocolors");
+const formatDateTime = require("./utils/dateTImeFormatter")
 
 class Loggernaut {
   constructor(config = {}) {
-    this.timestampFormat = config.timestampFormat || 'DD-MM-YYYY HH:mm:ss';
+    this.dwarf = config.dwarf ?? false;
+    this.prefix = config.prefix ?? true;
+    this.customMessage = config.customMessage || "LOGGERNAUT";
+    this.dateTime = config.dateTimeFormat ?? false;
+    this.dateTimeFormat = config.dateTimeFormat ?? "DD-MM-YYYY HH:mm:ss";
   }
 
   getCurrentTimestamp() {
     const date = new Date();
-    return this.formatDate(date, this.timestampFormat);
+    return formatDateTime(date, this.dateTimeFormat);
   }
 
-  formatDate(date, format) {
-    const map = {
-      'YYYY': date.getFullYear(),
-      'MM': ('0' + (date.getMonth() + 1)).slice(-2),
-      'DD': ('0' + date.getDate()).slice(-2),
-      'HH': ('0' + date.getHours()).slice(-2),
-      'mm': ('0' + date.getMinutes()).slice(-2),
-      'ss': ('0' + date.getSeconds()).slice(-2),
-    };
-
-    return format.replace(/YYYY|MM|DD|HH|mm|ss/gi, matched => map[matched]);
-  }
-
-  log(message, customMessage = 'LOGGERNAUT') {
-    console.log(`${customMessage ? customMessage + '-->' : ''}${message}`);
+  log(message, customMessage = this.customMessage) {
+    if (this.dwarf) {
+      console.log(`${this.prefix ? customMessage + ":" : ""}${message}`);
+    } else {
+      console.log(`${this.prefix ? customMessage + "-->" : ""}${message}`);
+    }
   }
 
   info(message) {
-    console.log(`%cINFO --> ${this.getCurrentTimestamp()} --> ${message}`, 'color: cyan');
+    console.log(
+      `${
+        this.prefix ? pc.bgCyan(pc.black("INFO")) + "-->" : ""
+      }${this.getCurrentTimestamp()} --> ${message}`
+    );
   }
 
   debug(message) {
-    console.log(`DEBUG --> ${this.getCurrentTimestamp()} --> ${message}`);
+    console.log(
+      `${
+        this.prefix ? pc.inverse("DEBUG") + "-->" : ""
+      }${this.getCurrentTimestamp()} --> ${message}`
+    );
   }
 
   warn(message) {
-    console.log(`%cWARN --> ${this.getCurrentTimestamp()} --> ${message}`, 'color: orange');
+    console.log(
+      `${
+        this.prefix ? pc.bgYellow(pc.black("WARN")) + "-->" : ""
+      }${this.getCurrentTimestamp()} --> ${message}`
+    );
   }
 
   error(message) {
-    console.log(`%cERROR --> ${this.getCurrentTimestamp()} --> ${message}`, 'color: red');
+    console.log(
+      `${
+        this.prefix ? pc.bgRed(pc.white("ERROR")) + "-->" : ""
+      }${this.getCurrentTimestamp()} --> ${message}`
+    );
   }
 
   trace(message) {
-    console.log(`TRACE --> ${this.getCurrentTimestamp()} --> ${message}`);
+    console.log(
+      `${
+        this.prefix ? pc.bgGreen(pc.white("TRACE")) + "-->" : ""
+      }${this.getCurrentTimestamp()} --> ${message}`
+    );
   }
 }
 
