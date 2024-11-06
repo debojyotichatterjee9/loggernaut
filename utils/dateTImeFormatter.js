@@ -1,4 +1,4 @@
-module.exports =  formatDateTime = (date, format) => {
+module.exports = formatDateTime = (date, format) => {
   const map = {
     YYYY: date.getFullYear(),
     MM: ("0" + (date.getMonth() + 1)).slice(-2),

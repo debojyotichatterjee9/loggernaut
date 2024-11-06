@@ -1,14 +1,16 @@
 // console.clear()
-const pc = require("picocolors");
-const formatDateTime = require("./utils/dateTImeFormatter")
+const pc = require("./utils/styleFormatter");
+const formatDateTime = require("./utils/dateTImeFormatter");
+const messageFormatter = require("./utils/messageFormatter");
+const LOGGERNAUT = require("./constants/commonConstants");
 
 class Loggernaut {
   constructor(config = {}) {
     this.dwarf = config.dwarf ?? false;
     this.prefix = config.prefix ?? true;
     this.customMessage = config.customMessage || "LOGGERNAUT";
-    this.dateTime = config.dateTimeFormat ?? false;
     this.dateTimeFormat = config.dateTimeFormat ?? "DD-MM-YYYY HH:mm:ss";
+    this.dateTime = config.dateTime ?? true;
   }
 
   getCurrentTimestamp() {
@@ -16,52 +18,28 @@ class Loggernaut {
     return formatDateTime(date, this.dateTimeFormat);
   }
 
-  log(message, customMessage = this.customMessage) {
-    if (this.dwarf) {
-      console.log(`${this.prefix ? customMessage + ":" : ""}${message}`);
-    } else {
-      console.log(`${this.prefix ? customMessage + "-->" : ""}${message}`);
-    }
+  log(message) {
+    console.log(messageFormatter(this, message));
   }
 
   info(message) {
-    console.log(
-      `${
-        this.prefix ? pc.bgCyan(pc.black("INFO")) + "-->" : ""
-      }${this.getCurrentTimestamp()} --> ${message}`
-    );
+    console.log(messageFormatter(this, message, LOGGERNAUT.INFO));
   }
 
   debug(message) {
-    console.log(
-      `${
-        this.prefix ? pc.inverse("DEBUG") + "-->" : ""
-      }${this.getCurrentTimestamp()} --> ${message}`
-    );
+    console.log(messageFormatter(this, message, LOGGERNAUT.DEBUG));
   }
 
   warn(message) {
-    console.log(
-      `${
-        this.prefix ? pc.bgYellow(pc.black("WARN")) + "-->" : ""
-      }${this.getCurrentTimestamp()} --> ${message}`
-    );
+    console.log(messageFormatter(this, message, LOGGERNAUT.WARN));
   }
 
   error(message) {
-    console.log(
-      `${
-        this.prefix ? pc.bgRed(pc.white("ERROR")) + "-->" : ""
-      }${this.getCurrentTimestamp()} --> ${message}`
-    );
+    console.log(messageFormatter(this, message, LOGGERNAUT.ERROR));
   }
 
   trace(message) {
-    console.log(
-      `${
-        this.prefix ? pc.bgGreen(pc.white("TRACE")) + "-->" : ""
-      }${this.getCurrentTimestamp()} --> ${message}`
-    );
+    console.log(messageFormatter(this, message, LOGGERNAUT.TRACE));
   }
 }
 
