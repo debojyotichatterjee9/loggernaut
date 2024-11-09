@@ -13,11 +13,6 @@ class Loggernaut {
     this.dateTime = config.dateTime ?? true;
   }
 
-  getCurrentTimestamp() {
-    const date = new Date();
-    return formatDateTime(date, this.dateTimeFormat);
-  }
-
   log(message) {
     console.log(messageFormatter(this, message));
   }
@@ -42,5 +37,6 @@ class Loggernaut {
     console.log(messageFormatter(this, message, LOGGERNAUT.TRACE));
   }
 }
-
-module.exports = Loggernaut;
+const defaultLoggernaut = new Loggernaut();
+module.exports = defaultLoggernaut;
+module.exports.Loggernaut = Loggernaut;
