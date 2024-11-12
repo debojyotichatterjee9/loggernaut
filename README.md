@@ -51,7 +51,7 @@ customLogger.trace("This is a custom trace line");
 
 Loggernaut accepts the following configuration options:
 
-- `dwarf` (boolean): Default is `false`. Custom configuration option (not utilized in current implementation).
+- `dwarf` (boolean): Default is `false`. Custom configuration option.
 - `prefix` (boolean): Default is `true`. Determines if a custom message prefix should be used.
 - `customMessage` (string): Default is `"LOGGERNAUT"`. The custom message prefix.
 - `dateTime` (boolean): Default is `true`. Determines if the current timestamp should be included in the log messages.
@@ -62,46 +62,21 @@ Loggernaut accepts the following configuration options:
 Loggernaut supports the following methods:
 
 - `log(message)`: Logs a general message.
-- `info(message)`: Logs an info message in cyan color.
+- `info(message)`: Logs an info message in cyan color flag at the start.
 - `debug(message)`: Logs a debug message without any color.
-- `warn(message)`: Logs a warning message in orange color.
-- `error(message)`: Logs an error message in red color.
-- `trace(message)`: Logs a trace message without any color.
+- `warn(message)`: Logs a warning message in orange color flag at the start.
+- `error(message)`: Logs an error message in red color flag at the start.
+- `trace(message)`: Logs a trace message without any color flag at the start.
 
 ## Examples
 
 ### Default Logging
 
-```js
-const loggernaut = require('loggernaut');
 
-loggernaut.log("This is a log line");
-loggernaut.info("This is an info line");
-loggernaut.debug("This is a debug line");
-loggernaut.warn("This is a warn line");
-loggernaut.error(new Error("This is an error"));
-loggernaut.trace("This is a trace line");
-```
 
 ### Custom Logging
 
-```js
-const { Loggernaut } = require('loggernaut');
-const customLogger = new Loggernaut({
-  dwarf: true,
-  prefix: true,
-  dateTime: false,
-  dateTimeFormat: 'YYYY-MM-DD HH:mm:ss',
-  customMessage: 'MYLOGGER'
-});
 
-customLogger.log("This is a custom log line");
-customLogger.info("This is a custom info line");
-customLogger.debug("This is a custom debug line");
-customLogger.warn("This is a custom warn line");
-customLogger.error(new Error("This is a custom error"));
-customLogger.trace("This is a custom trace line");
-```
 
 ## License
 
