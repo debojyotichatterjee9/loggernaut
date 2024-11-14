@@ -14,7 +14,7 @@ module.exports = messageFormatter = (config, message, type) => {
   const strigifiedMessage = getStringifiedValue(message);
   if (type === LOGGERNAUT.INFO) {
     if (config.dwarf) {
-      return `${config.prefix ? LOGGERNAUT.INFO + ":" : ""}${
+      return `${config.prefix ? LOGGERNAUT.DWARF_INFO + ":" : ""}${
         timeStamp ? timeStamp + ":" : ""
       }${strigifiedMessage}`;
     }
@@ -30,7 +30,7 @@ module.exports = messageFormatter = (config, message, type) => {
   }
   if (type === LOGGERNAUT.DEBUG) {
     if (config.dwarf) {
-      return `${config.prefix ? LOGGERNAUT.DEBUG + ":" : ""}${
+      return `${config.prefix ? LOGGERNAUT.DWARF_DEBUG + ":" : ""}${
         timeStamp ? timeStamp + ":" : ""
       }${strigifiedMessage}`;
     }
@@ -44,43 +44,61 @@ module.exports = messageFormatter = (config, message, type) => {
   }
   if (type === LOGGERNAUT.WARN) {
     if (config.dwarf) {
-      return `${config.prefix ? LOGGERNAUT.WARN + ":" : ""}${
+      return `${config.prefix ? LOGGERNAUT.DWARF_WARN + ":" : ""}${
         timeStamp ? timeStamp + ":" : ""
       }${strigifiedMessage}`;
     }
     return `${
       config.prefix
-        ? STYLEIT.BGYELLOW(STYLEIT.BLACK(LOGGERNAUT.WARN)) + ":" + LOGGERNAUT.TABSPACE
+        ? STYLEIT.BGYELLOW(STYLEIT.BLACK(LOGGERNAUT.WARN)) +
+          ":" +
+          LOGGERNAUT.TABSPACE
         : ""
-    }${timeStamp ? `[${timeStamp}]` + ":" + LOGGERNAUT.TABSPACE : ""}${strigifiedMessage}`;
+    }${
+      timeStamp ? `[${timeStamp}]` + ":" + LOGGERNAUT.TABSPACE : ""
+    }${strigifiedMessage}`;
   }
   if (type === LOGGERNAUT.ERROR) {
     if (config.dwarf) {
-      return `${config.prefix ? LOGGERNAUT.ERROR + ":" : ""}${
+      return `${config.prefix ? LOGGERNAUT.DWARF_ERROR + ":" : ""}${
         timeStamp ? timeStamp + ":" : ""
       }${strigifiedMessage}`;
     }
     return `${
-      config.prefix ? STYLEIT.BGRED(STYLEIT.WHITE(LOGGERNAUT.ERROR)) + ":" + LOGGERNAUT.TABSPACE : ""
-    }${timeStamp ? `[${timeStamp}]` + ":" + LOGGERNAUT.TABSPACE : ""}${strigifiedMessage}`;
+      config.prefix
+        ? STYLEIT.BGRED(STYLEIT.WHITE(LOGGERNAUT.ERROR)) +
+          ":" +
+          LOGGERNAUT.TABSPACE
+        : ""
+    }${
+      timeStamp ? `[${timeStamp}]` + ":" + LOGGERNAUT.TABSPACE : ""
+    }${strigifiedMessage}`;
   }
   if (type === LOGGERNAUT.TRACE) {
     if (config.dwarf) {
-      return `${config.prefix ? LOGGERNAUT.TRACE + ":" : ""}${
+      return `${config.prefix ? LOGGERNAUT.DWARF_TRACE + ":" : ""}${
         timeStamp ? timeStamp + ":" : ""
       }${strigifiedMessage}`;
     }
     return `${
-      config.prefix ? STYLEIT.BGGREEN(STYLEIT.WHITE(LOGGERNAUT.TRACE)) + ":" + LOGGERNAUT.TABSPACE : ""
-    }${timeStamp ? `[${timeStamp}]` + ":" + LOGGERNAUT.TABSPACE : ""}${strigifiedMessage}`;
+      config.prefix
+        ? STYLEIT.BGGREEN(STYLEIT.WHITE(LOGGERNAUT.TRACE)) +
+          ":" +
+          LOGGERNAUT.TABSPACE
+        : ""
+    }${
+      timeStamp ? `[${timeStamp}]` + ":" + LOGGERNAUT.TABSPACE : ""
+    }${strigifiedMessage}`;
   } else {
     if (config.dwarf) {
       return `${
-        config.prefix ? config.customMessage + ":" : ""
+        config.prefix ? "[" + config.customPrefix + "]" + ":" : ""
       }${strigifiedMessage}`;
     }
     return `${
-      config.prefix ? config.customMessage + "-->" : ""
+      config.prefix
+        ? "[**" + config.customPrefix + "**]" + ":" + LOGGERNAUT.TABSPACE
+        : ""
     }${strigifiedMessage}`;
   }
 };

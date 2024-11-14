@@ -8,7 +8,7 @@ class Loggernaut {
   constructor(config = {}) {
     this.dwarf = config.dwarf ?? false;
     this.prefix = config.prefix ?? true;
-    this.customMessage = config.customMessage || "LOGGERNAUT";
+    this.customPrefix = config.customPrefix ?? LOGGERNAUT.DEFAULT;
     this.dateTimeFormat = config.dateTimeFormat ?? "DD-MM-YYYY HH:mm:ss";
     this.dateTime = config.dateTime ?? true;
   }
