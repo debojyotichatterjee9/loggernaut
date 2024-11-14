@@ -152,4 +152,3 @@ const createFormatting = (enabled = isColorSupported) => {
 };
 
 module.exports = createFormatting();
-// module.exports.createColors = createColors;
