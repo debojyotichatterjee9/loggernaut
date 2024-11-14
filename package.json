@@ -11,10 +11,10 @@
     "url": "git+https://github.com/debojyotichatterjee9/loggernaut.git"
   },
   "keywords": [
-    "logger"
+    "logger", "nodejs", "express", "nestjs", "javascript"
   ],
   "author": "Debojyoti Chatterjee",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/debojyotichatterjee9/loggernaut/issues"
   },
