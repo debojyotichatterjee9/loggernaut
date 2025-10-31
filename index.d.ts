@@ -1,14 +1,13 @@
-// Type definitions for loggernaut 1.0
+// Type definitions for loggernaut 1.1.1
 // Project: https://github.com/your-username/loggernaut
 // Definitions by: Your Name <https://github.com/your-username>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 /**
  * Loggernaut - A flexible logging utility for Node.js
  */
 
 /** Loggernaut configuration options */
-interface LoggernautConfig {
+export interface LoggernautConfig {
     /**
      * Enable dwarf mode (compact output)
      * @default false
@@ -43,7 +42,7 @@ interface LoggernautConfig {
 /**
  * Main Loggernaut class for creating logger instances
  */
-declare class Loggernaut {
+export declare class Loggernaut {
     constructor(config?: LoggernautConfig);
 
     /**
@@ -88,5 +87,4 @@ declare class Loggernaut {
  */
 declare const defaultLoggernaut: Loggernaut;
 
-export = defaultLoggernaut;
-export { Loggernaut, LoggernautConfig };
+export default defaultLoggernaut;

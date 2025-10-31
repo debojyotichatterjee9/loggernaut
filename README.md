@@ -1,77 +1,192 @@
 # Loggernaut
 
-Loggernaut is a customizable logger package for Node.js that supports various log levels, custom message prefixes, and configurable timestamps without any external dependencies.
+A flexible logging utility for Node.js with TypeScript support.
+
+## Requirements
+* Node.js: The original package is designed for Node.js environments
 
 ## Installation
 
-```sh
+```bash
 npm install loggernaut
 ```
 
-## Usage/Examples
+## Quick Start
 
-### Default Configuration
+### JavaScript Usage
+```javascript
+const logger = require('loggernaut');
 
-To use Loggernaut with the default configuration, you can simply require it and start logging:
+logger.info('Hello World');
+logger.error('Something went wrong');
 
-```js
-const loggernaut = require('loggernaut');
-
-loggernaut.log("This is a generic log.");
-loggernaut.info("This is an info log.");
-loggernaut.debug("This is a debug log.");
-loggernaut.warn("This is a warn log.");
-loggernaut.error("This is an error log.");
-loggernaut.trace("This is a trace log.");
+// Custom logger
+const { Loggernaut } = require('loggernaut');
+const customLogger = new Loggernaut({ dwarf: true });
+customLogger.debug('Custom logger');
 ```
 
-### Custom Configuration
+### TypeScript Usage
+```typescript
+import logger, { Loggernaut, LoggernautConfig } from 'loggernaut';
 
-You can also create an instance of Loggernaut with your own configurations:
+// Default instance
+logger.info('Hello World');
+logger.error('Something went wrong');
 
-```js
-const { Loggernaut } = require('loggernaut');
-const loggernaut = new Loggernaut({
-  dwarf: true,
+// Custom logger with type safety
+const config: LoggernautConfig = {
+    dwarf: false,
     prefix: true,
-    customPrefix: "MYLOGGER",
-    dateTime: true,
-    dateTimeFormat: 'DD-MM-YYYY HH:mm:ss'
+    customPrefix: 'MY-APP',
+    dateTimeFormat: 'YYYY-MM-DD HH:mm:ss'
+};
+
+const customLogger = new Loggernaut(config);
+customLogger.debug('Custom typed logger');
+```
+
+### Creating Custom Logger Instances
+```typescript
+import { Loggernaut } from 'loggernaut';
+
+// Custom configuration
+const apiLogger = new Loggernaut({
+    dwarf: false,
+    prefix: true,
+    customPrefix: 'API',
+    dateTimeFormat: 'HH:mm:ss',
+    dateTime: true
 });
 
-loggernaut.log("This is a generic log.");
-loggernaut.info("This is an info log.");
-loggernaut.debug("This is a debug log.");
-loggernaut.warn("This is a warn log.");
-loggernaut.error("This is an error log.");
-loggernaut.trace("This is a trace log.");
+const dbLogger = new Loggernaut({
+    dwarf: true,
+    customPrefix: 'DATABASE',
+    dateTime: false
+});
+
+apiLogger.info('API request received');
+dbLogger.debug('Database query executed');
 ```
 
-## Configuration Options
+### Configuration Options
 
-Loggernaut accepts the following configuration options:
+| Option | Type | Default | Description |
+| --- | ---: | --- | --- |
+| dwarf | boolean | false | Enable compact output mode without colors |
+| prefix | boolean | true | Show/hide prefix in log messages |
+| customPrefix | string | "LOGGERNAUT" | Custom text for log prefixes |
+| dateTimeFormat | string | "DD-MM-YYYY HH:mm:ss" | DateTime formatting pattern |
+| dateTime | boolean | true | Enable/disable timestamps in logs |
 
-- `dwarf` (boolean): Shortens the message logs and removes colors. Default is `false`.
-- `prefix` (boolean): Determines if a custom message prefix should be used. Default is `true`.
-- `customMessage` (string): The custom message prefix for generic  `loggernaut.log()`. Default is `"LOGGERNAUT"`. 
-- `dateTime` (boolean): Determines if the current timestamp should be included in the log messages. Default is `true`.
-- `dateTimeFormat` (string): Determines the format for the timestamp. Default is `"DD-MM-YYYY HH:mm:ss"`.
+### DateTime Format Patterns
+* YYYY - 4-digit year (2024)
+* MM - 2-digit month (01-12)
+* DD - 2-digit day (01-31)
+* HH - 2-digit hour (00-23)
+* mm - 2-digit minutes (00-59)
+* ss - 2-digit seconds (00-59)
 
-## Methods
+#### Methods
 
-Loggernaut supports the following methods:
+* log(message: any) - Default log level
+* info(message: any) - Informational messages
+* debug(message: any) - Debug information
+* warn(message: any) - Warning messages
+* error(message: any) - Error messages
+* trace(message: any) - Trace-level information
 
-- `log(message)`: Logs a general message.
-- `info(message)`: Logs an info message in cyan color flag at the start.
-- `debug(message)`: Logs a debug message without any color.
-- `warn(message)`: Logs a warning message in orange color flag at the start.
-- `error(message)`: Logs an error message in red color flag at the start.
-- `trace(message)`: Logs a trace message without any color flag at the start.
+###Examples
 
-## Upcoming
+#### Basic Application Logger
+```typescript
+import logger from 'loggernaut';
 
-Ability to log messages in colors should be available in future version.
+class Application {
+    start() {
+        logger.info('Starting application...');
+        
+        try {
+            // Application logic
+            logger.debug('Initializing modules');
+            logger.info('Application started successfully');
+        } catch (error) {
+            logger.error('Failed to start application:', error);
+        }
+    }
+}
+```
 
-## License
+#### Multiple Logger Instances
+```typescript
+import { Loggernaut } from 'loggernaut';
 
-This project is licensed under the MIT License.
+// Different loggers for different components
+const httpLogger = new Loggernaut({
+    customPrefix: 'HTTP',
+    dateTimeFormat: 'HH:mm:ss'
+});
+
+const databaseLogger = new Loggernaut({
+    customPrefix: 'DB',
+    dwarf: true
+});
+
+const authLogger = new Loggernaut({
+    customPrefix: 'AUTH',
+    dateTimeFormat: 'YYYY-MM-DD HH:mm:ss'
+});
+
+httpLogger.info('GET /api/users 200');
+databaseLogger.debug('Query: SELECT * FROM users');
+authLogger.warn('Failed login attempt');
+```
+
+#### Production vs Development Configuration
+```typescript
+import { Loggernaut } from 'loggernaut';
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+const logger = new Loggernaut({
+    dwarf: isProduction, // Compact logs in production
+    dateTime: !isProduction, // No timestamps in production for performance
+    prefix: true,
+    customPrefix: isProduction ? 'APP' : 'DEV-APP'
+});
+```
+
+### TypeScript Support
+
+This package includes built-in TypeScript definitions. No need to install `@types/loggernaut`.
+
+## Contributing
+
+You're welcome contributions! Please feel free to submit issues and pull requests.
+
+1. Fork the repository
+2. Create a feature branch (git checkout -b feature/improvement)
+3. Commit your changes (git commit -am 'Add new feature')
+4. Push to the branch (git push origin feature/improvement)
+5. Create a Pull Request
+
+### Support
+
+📖 [Documentation](https://github.com/debojyotichatterjee9/loggernaut#readme)
+
+🐛 [Report Issues](https://github.com/debojyotichatterjee9/loggernaut/issues)
+
+💡 [Request Features](https://github.com/debojyotichatterjee9/loggernaut/issues)
+
+### License
+
+This project is licensed under the MIT License - see the [LICENSE](https://license/) file for details.
+
+### Related Links
+
+[Original loggernaut package](https://www.npmjs.com/package/loggernaut)
+
+[GitHub Repository](https://github.com/debojyotichatterjee9/loggernaut)
+
+[TypeScript Documentation](https://www.typescriptlang.org/)
+

@@ -1,17 +1,39 @@
 {
   "name": "loggernaut",
   "version": "1.1.1",
-  "description": "loggernaut is a lightweight and easy-to-use logging library designed for simple debugging and logging needs in your Node.js applications. It provides a straightforward API for quickly capturing and recording log messages, making it ideal for development, testing, and production environments.",
+  "description": "A flexible logging utility for Node.js with TypeScript support",
   "main": "index.js",
+  "types": "index.d.ts",
+  "type": "commonjs",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "utils/",
+    "constants/",
+    "README.md"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/test.js",
+    "test:types": "ts-node test/types-test.ts",
+    "build": "echo 'No build step needed'"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.0",
+    "ts-node": "^10.9.0",
+    "@types/node": "^20.0.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/debojyotichatterjee9/loggernaut.git"
   },
   "keywords": [
-    "logger", "nodejs", "express", "nestjs", "javascript"
+    "logger",
+    "logging",
+    "typescript",
+    "nodejs",
+    "console",
+    "debug",
+    "log"
   ],
   "author": "Debojyoti Chatterjee",
   "license": "MIT",
