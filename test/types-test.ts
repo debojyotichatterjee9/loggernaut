@@ -75,8 +75,8 @@ const complexObject = {
     }
 };
 
-logger.debug('Complex object:', complexObject);
-logger.error('Error with context:', {
+logger.debug(complexObject);
+logger.error({
     error: new Error('Database connection failed'),
     query: 'SELECT * FROM users',
     timestamp: new Date()
